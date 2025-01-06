@@ -369,42 +369,42 @@
                 ->nickname('setting')
                 ->data('permission', 'system setting');
 
-         $menu->add('<span>'.__('message.website_section').'</span>', ['class' => ''])
-            ->prepend('<i class="fas fa-globe-asia"></i>')
-            ->nickname('website_section')
-            ->data('permission', 'website_section list')
-            ->link->attr(['class' => ''])
-            ->href('#website_section');
+        //  $menu->add('<span>'.__('message.website_section').'</span>', ['class' => ''])
+        //     ->prepend('<i class="fas fa-globe-asia"></i>')
+        //     ->nickname('website_section')
+        //     ->data('permission', 'website_section list')
+        //     ->link->attr(['class' => ''])
+        //     ->href('#website_section');
 
-            $menu->website_section->add('<span>'. __('message.information').'</span>', ['class' => 'sidebar-layout' ,'route' => [ 'frontend.website.form', 'app_info'] ])
-                ->data('permission', 'information list')
-                ->prepend('<i class="fas fa-file-alt"></i>')
-                ->link->attr(['class' => '']);
+        //     $menu->website_section->add('<span>'. __('message.information').'</span>', ['class' => 'sidebar-layout' ,'route' => [ 'frontend.website.form', 'app_info'] ])
+        //         ->data('permission', 'information list')
+        //         ->prepend('<i class="fas fa-file-alt"></i>')
+        //         ->link->attr(['class' => '']);
 
-            $menu->website_section->add('<span>'. __('message.our_mission').'</span>', ['class' => 'sidebar-layout' ,'route' => 'our-mission.index'])
-                ->data('permission', 'our_mission list')
-                ->prepend('<i class="fa fa-star"></i>')
-                ->link->attr(['class' => '']);
+        //     $menu->website_section->add('<span>'. __('message.our_mission').'</span>', ['class' => 'sidebar-layout' ,'route' => 'our-mission.index'])
+        //         ->data('permission', 'our_mission list')
+        //         ->prepend('<i class="fa fa-star"></i>')
+        //         ->link->attr(['class' => '']);
 
-            $menu->website_section->add('<span>'. __('message.why_choose').'</span>', ['class' => 'sidebar-layout' ,'route' => 'why-choose.index'])
-                ->data('permission', 'why_choose list')
-                ->prepend('<i class="fa fa-handshake"></i>')
-                ->link->attr(['class' => '']);
+        //     $menu->website_section->add('<span>'. __('message.why_choose').'</span>', ['class' => 'sidebar-layout' ,'route' => 'why-choose.index'])
+        //         ->data('permission', 'why_choose list')
+        //         ->prepend('<i class="fa fa-handshake"></i>')
+        //         ->link->attr(['class' => '']);
 
-            $menu->website_section->add('<span>'. __('message.client_testimonials').'</span>', ['class' => 'sidebar-layout' ,'route' => 'client-testimonials.index'])
-                ->data('permission', 'client_testimonials list')
-                ->prepend('<i class="fas fa-thumbs-up"></i>')
-                ->link->attr(['class' => '']);
+        //     $menu->website_section->add('<span>'. __('message.client_testimonials').'</span>', ['class' => 'sidebar-layout' ,'route' => 'client-testimonials.index'])
+        //         ->data('permission', 'client_testimonials list')
+        //         ->prepend('<i class="fas fa-thumbs-up"></i>')
+        //         ->link->attr(['class' => '']);
 
-            $menu->website_section->add('<span>'. __('message.downloandapp').'</span>', ['class' => 'sidebar-layout', 'route' => [ 'frontend.website.form', 'download_app'] ])
-                ->data('permission', 'downloandapp list')
-                ->prepend('<i class="fas fa-download"></i>')
-                ->link->attr(['class' => '']);
+        //     $menu->website_section->add('<span>'. __('message.downloandapp').'</span>', ['class' => 'sidebar-layout', 'route' => [ 'frontend.website.form', 'download_app'] ])
+        //         ->data('permission', 'downloandapp list')
+        //         ->prepend('<i class="fas fa-download"></i>')
+        //         ->link->attr(['class' => '']);
 
-            $menu->website_section->add('<span>'. __('message.contactinfo').'</span>', ['class' => 'sidebar-layout', 'route' => [ 'frontend.website.form', 'contactus_info'] ])
-                ->data('permission', 'contactinfo list')
-                ->prepend('<i class="fas fa-id-badge"></i>')
-                ->link->attr(['class' => '']);
+        //     $menu->website_section->add('<span>'. __('message.contactinfo').'</span>', ['class' => 'sidebar-layout', 'route' => [ 'frontend.website.form', 'contactus_info'] ])
+        //         ->data('permission', 'contactinfo list')
+        //         ->prepend('<i class="fas fa-id-badge"></i>')
+        //         ->link->attr(['class' => '']);
 
         })->filter(function ($item) {
             return checkMenuRoleAndPermission($item);
