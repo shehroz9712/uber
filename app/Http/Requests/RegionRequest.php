@@ -35,11 +35,13 @@ class RegionRequest extends FormRequest
             case 'post':
                 $rules = [
                     'name' => 'required',
+                    'coordinates' => 'required',
                 ];
                 break;
             case 'patch':
                 $rules = [
                     'name'  => 'required',
+                    'coordinates'  => 'required',
                 ];
                 break;
         }
@@ -49,25 +51,26 @@ class RegionRequest extends FormRequest
 
     public function messages()
     {
-        return [ ];
+        return [];
     }
 
-     /**
+    /**
      * @param Validator $validator
      */
-    protected function failedValidation(Validator $validator) {
+    protected function failedValidation(Validator $validator)
+    {
         $data = [
             'status' => true,
             'message' => $validator->errors()->first(),
             'all_message' =>  $validator->errors()
         ];
 
-        if ( request()->is('api*')){
-           throw new HttpResponseException( response()->json($data,422) );
+        if (request()->is('api*')) {
+            throw new HttpResponseException(response()->json($data, 422));
         }
 
         if ($this->ajax()) {
-            throw new HttpResponseException(response()->json($data,422));
+            throw new HttpResponseException(response()->json($data, 422));
         } else {
             throw new HttpResponseException(redirect()->back()->withInput()->with('errors', $validator->errors()));
         }

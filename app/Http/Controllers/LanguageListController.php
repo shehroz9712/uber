@@ -19,10 +19,10 @@ class LanguageListController extends Controller
     {
         $pageTitle = __('message.list_form_title',['form' => __('message.language')] );
         $auth_user = authSession();
-        // if (!auth()->user()->can('languagelist-list')) {
-        //     $message = __('message.permission_denied_for_account');
-        //     return redirect()->back()->withErrors($message);
-        // }
+        if (!auth()->user()->can('languagelist-list')) {
+            $message = __('message.permission_denied_for_account');
+            return redirect()->back()->withErrors($message);
+        }
         $assets = ['datatable'];
 
         $button = $auth_user->can('languagelist-add') ? '<a href="'.route('languagelist.create').'" class="float-right btn btn-md border-radius-10 btn-outline-dark"><i class="fa fa-plus-circle"></i> '.__('message.add_form_title',['form' => __('message.language')]).'</a>' : '';

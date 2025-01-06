@@ -16,10 +16,10 @@ class ScreenController extends Controller
     {
         $pageTitle = __('message.list_form_title',['form' => __('message.screen')] );
         $auth_user = authSession();
-        // if (!auth()->user()->can('screen-list')) {
-        //     $message = __('message.permission_denied_for_account');
-        //     return redirect()->back()->withErrors($message);
-        // }
+        if (!auth()->user()->can('screen-list')) {
+            $message = __('message.permission_denied_for_account');
+            return redirect()->back()->withErrors($message);
+        }
         $assets = ['datatable'];
         $button = '';
         return $dataTable->render('global.datatable', compact('pageTitle','auth_user','button'));
