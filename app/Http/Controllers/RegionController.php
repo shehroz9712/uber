@@ -19,11 +19,11 @@ class RegionController extends Controller
      */
     public function index(RegionDataTable $dataTable)
     {
-        $pageTitle = __('message.list_form_title',['form' => __('message.region')] );
+        $pageTitle = __('message.list_form_title', ['form' => __('message.region')]);
         $auth_user = authSession();
         $assets = ['datatable'];
-        $button = $auth_user->can('region add') ? '<a href="'.route('region.create').'" class="float-right btn btn-md border-radius-10 btn-outline-dark"><i class="fa fa-plus-circle"></i> '.__('message.add_form_title',['form' => __('message.region')]).'</a>' : '';
-        return $dataTable->render('global.datatable', compact('assets','pageTitle','button','auth_user'));
+        $button = $auth_user->can('region add') ? '<a href="' . route('region.create') . '" class="float-right btn btn-md border-radius-10 btn-outline-dark"><i class="fa fa-plus-circle"></i> ' . __('message.add_form_title', ['form' => __('message.region')]) . '</a>' : '';
+        return $dataTable->render('global.datatable', compact('assets', 'pageTitle', 'button', 'auth_user'));
     }
 
     /**
@@ -33,9 +33,9 @@ class RegionController extends Controller
      */
     public function create()
     {
-        $pageTitle = __('message.add_form_title',[ 'form' => __('message.region')]);
+        $pageTitle = __('message.add_form_title', ['form' => __('message.region')]);
         $assets = ['map'];
-        return view('region.form', compact('pageTitle','assets'));
+        return view('region.form', compact('pageTitle', 'assets'));
     }
 
     /**
@@ -46,13 +46,12 @@ class RegionController extends Controller
      */
     public function store(RegionRequest $request)
     {
-        if(env('APP_DEMO')){
+        if (env('APP_DEMO')) {
             return redirect()->route('region.index')->withErrors(__('message.demo_permission_denied'));
         }
         $coordinates = $request->coordinates;
-        foreach(explode('),(',trim($coordinates,'()')) as $index => $single_array){
-            if($index == 0)
-            {
+        foreach (explode('),(', trim($coordinates, '()')) as $index => $single_array) {
+            if ($index == 0) {
                 $last_latlong = explode(',', $single_array);
             }
             $latlong = explode(',', $single_array);
@@ -80,7 +79,7 @@ class RegionController extends Controller
      */
     public function show($id)
     {
-        $pageTitle = __('message.add_form_title',[ 'form' => __('message.region')]);
+        $pageTitle = __('message.add_form_title', ['form' => __('message.region')]);
         $data = Region::findOrFail($id);
 
         return view('region.show', compact('data'));
@@ -94,7 +93,7 @@ class RegionController extends Controller
      */
     public function edit($id)
     {
-        $pageTitle = __('message.update_form_title',[ 'form' => __('message.region')]);
+        $pageTitle = __('message.update_form_title', ['form' => __('message.region')]);
         // $data = Region::findOrFail($id);
 
         $data = Region::selectRaw('* , ST_AsText(ST_Centroid(`coordinates`)) as center')->findOrFail($id);
@@ -111,22 +110,21 @@ class RegionController extends Controller
      */
     public function update(RegionRequest $request, $id)
     {
-        if(env('APP_DEMO')){
+        if (env('APP_DEMO')) {
             return redirect()->route('region.index')->withErrors(__('message.demo_permission_denied'));
         }
         $region = Region::findOrFail($id);
 
         $coordinates = $request->coordinates;
-        foreach(explode('),(',trim($coordinates,'()')) as $index => $single_array){
-            if($index == 0)
-            {
+        foreach (explode('),(', trim($coordinates, '()')) as $index => $single_array) {
+            if ($index == 0) {
                 $last_latlong = explode(',', $single_array);
             }
             $latlong = explode(',', $single_array);
             $polygon[] = new Point($latlong[0], $latlong[1]);
         }
         $polygon[] = new Point($last_latlong[0], $last_latlong[1]);
-        
+
         $region->name = $request->name;
         $region->distance_unit = $request->distance_unit;
         $region->status = $request->status;
@@ -134,10 +132,10 @@ class RegionController extends Controller
         $region->coordinates = new Polygon([new LineString($polygon)]);
 
         $region->save();
-        if(auth()->check()){
-            return redirect()->route('region.index')->withSuccess(__('message.update_form',['form' => __('message.region')]));
+        if (auth()->check()) {
+            return redirect()->route('region.index')->withSuccess(__('message.update_form', ['form' => __('message.region')]));
         }
-        return redirect()->back()->withSuccess(__('message.update_form',['form' => __('message.region') ] ));
+        return redirect()->back()->withSuccess(__('message.update_form', ['form' => __('message.region')]));
     }
 
     /**
@@ -148,10 +146,10 @@ class RegionController extends Controller
      */
     public function destroy($id)
     {
-        if(env('APP_DEMO')){
+        if (env('APP_DEMO')) {
             $message = __('message.demo_permission_denied');
-            if(request()->ajax()) {
-                return response()->json(['status' => true, 'message' => $message ]);
+            if (request()->ajax()) {
+                return response()->json(['status' => true, 'message' => $message]);
             }
             return redirect()->route('region.index')->withErrors($message);
         }
@@ -159,16 +157,16 @@ class RegionController extends Controller
         $status = 'errors';
         $message = __('message.not_found_entry', ['name' => __('message.region')]);
 
-        if($region != '') {
+        if ($region != '') {
             $region->delete();
             $status = 'success';
             $message = __('message.delete_form', ['form' => __('message.region')]);
         }
 
-        if(request()->ajax()) {
-            return response()->json(['status' => true, 'message' => $message ]);
+        if (request()->ajax()) {
+            return response()->json(['status' => true, 'message' => $message]);
         }
 
-        return redirect()->back()->with($status,$message);
+        return redirect()->back()->with($status, $message);
     }
 }

@@ -94,17 +94,17 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('username',__('message.username').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
-                                    {{ Form::text('username', old('username'), ['class' => 'form-control', 'required', 'placeholder' => __('message.username') ]) }}
+                                    {{ Form::label('username', __('message.username') . ' <span class="text-danger">*</span>', ['class' => 'form-control-label'], false) }}
+                                    {{ Form::text('username', null, ['class' => 'form-control', 'required', 'placeholder' => __('message.username'), 'autocomplete' => 'off']) }}
                                 </div>
-
-                                @if(!isset($id))
+                                
+                                @if (!isset($id))
                                     <div class="form-group col-md-6">
-                                        {{ Form::label('password',__('message.password').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
-                                        {{ Form::password('password', ['class' => 'form-control', 'placeholder' =>  __('message.password') ]) }}
+                                        {{ Form::label('password', __('message.password') . ' <span class="text-danger">*</span>', ['class' => 'form-control-label'], false) }}
+                                        {{ Form::password('password', ['class' => 'form-control', 'placeholder' => __('message.password'), 'required', 'autocomplete' => 'new-password']) }}
                                     </div>
                                 @endif
-
+                                
                                 <div class="form-group col-md-6">
                                     {{ Form::label('contact_number',__('message.contact_number').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
                                     {{ Form::text('contact_number', old('contact_number'),[ 'placeholder' => __('message.contact_number'), 'class' => 'form-control', 'id' => 'phone' ]) }}

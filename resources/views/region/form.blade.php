@@ -53,7 +53,7 @@
                                     {{ Form::select('status', ['1' => __('message.active'), '0' => __('message.inactive')], old('status'), ['class' => 'form-control select2js', 'required']) }}
                                 </div>
                                 <div class="form-group col-md-8">
-                                    {{ Form::label('status','Search Location' , ['class' => 'form-control-label'], false) }}
+                                    {{ Form::label('status', 'Search Location', ['class' => 'form-control-label'], false) }}
 
                                     <input id="search-box" type="text" class="form-control mb-3"
                                         placeholder="Search location..." />
@@ -163,11 +163,9 @@
                             map: map
                         });
 
-                        // Set coordinates to hidden input
-                        document.getElementById('coordinates').value = JSON.stringify({
-                            lat: place.geometry.location.lat(),
-                            lng: place.geometry.location.lng()
-                        });
+                        // Set coordinates to hidden input in the desired format
+                        document.getElementById('coordinates').value =
+                            `(${place.geometry.location.lat()}, ${place.geometry.location.lng()})`;
 
                         // Adjust the map bounds
                         if (place.geometry.viewport) bounds.union(place.geometry.viewport);
@@ -176,6 +174,26 @@
 
                     map.fitBounds(bounds);
                 });
+
+                google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+                    if (last_latlong) {
+                        last_latlong.setMap(null);
+                    }
+
+                    const coordinates = event.overlay.getPath().getArray().map((latLng) =>
+                        `(${latLng.lat()}, ${latLng.lng()})`
+                    ).join(',');
+
+                    document.getElementById('coordinates').value = coordinates;
+                    last_latlong = event.overlay;
+                    auto_grow();
+                });
+            }
+
+            function auto_grow() {
+                const element = document.getElementById('coordinates');
+                element.style.height = '5px';
+                element.style.height = `${element.scrollHeight}px`;
             }
 
             function loadGoogleMapsScript() {
