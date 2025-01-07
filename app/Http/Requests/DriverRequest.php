@@ -44,7 +44,6 @@ class DriverRequest extends FormRequest
             } else {
                 $rules['password'] = 'nullable|min:8';
             }
-
         } else {
             $method = strtolower($this->method());
             $user_id = $this->route()->driver;
@@ -78,29 +77,35 @@ class DriverRequest extends FormRequest
     public function messages()
     {
         return [
-            'userDetail.car_model.*'  =>'Car Model is required.',
-            'userDetail.car_color.*'  =>'Car Color is required.',
-            'userDetail.car_plate_number.*'  =>'Car Plate number is required.',
-            'userDetail.car_production_year.*'  =>'Car production year is required.',
+            'userDetail.car_model.*'  => 'Car Model is required.',
+            'userDetail.car_color.*'  => 'Car Color is required.',
+            'userDetail.car_plate_number.*'  => 'Car Plate number is required.',
+            'userDetail.car_production_year.required' => 'Car production year is required.',
+            'userDetail.car_production_year.digits' => 'Car production year must be exactly 4 digits.',
+            'userDetail.car_production_year.integer' => 'Car production year must be a valid integer.',
+            'userDetail.car_production_year.min' => 'Car production year must be at least 1900.',
+            'userDetail.car_production_year.max' => 'Car production year cannot exceed the current year.',
+            'userDetail.car_production_year.*'  => 'Car production year is required.',
         ];
     }
 
-     /**
+    /**
      * @param Validator $validator
      */
-    protected function failedValidation(Validator $validator) {
+    protected function failedValidation(Validator $validator)
+    {
         $data = [
             'status' => true,
             'message' => $validator->errors()->first(),
             'all_message' =>  $validator->errors()
         ];
 
-        if ( request()->is('api*')){
-           throw new HttpResponseException( response()->json($data,422) );
+        if (request()->is('api*')) {
+            throw new HttpResponseException(response()->json($data, 422));
         }
 
         if ($this->ajax()) {
-            throw new HttpResponseException(response()->json($data,422));
+            throw new HttpResponseException(response()->json($data, 422));
         } else {
             throw new HttpResponseException(redirect()->back()->withInput()->with('errors', $validator->errors()));
         }
