@@ -4,7 +4,7 @@
         <div class="row">
             @foreach($ride_setting as $key => $value)
                 <div class="col-md-6 form-group">
-                    {{-- @if($key == 'preset_tip_amount' )
+                    @if($key == 'preset_tip_amount' )
                         {{ Form::label($key,__('message.'.$key).' <span data-toggle="tooltip" data-placement="right" title="'.__('message.preset_tip_amount_info').'"><i class="fas fa-question-circle"></i></span>',['class'=>'form-control-label'],false ) }}
                         {{ Form::text($key,$value ?? null,[ 'placeholder' => '0|5|10|50', 'class' => 'form-control' ]) }}
                     @elseif( $key == 'surge_price' )
@@ -20,9 +20,8 @@
                                 ]) }} 
                                 <label class="custom-control-label ml-2" for="switch_{{ $key }}"></label>
                             </div>
-                        </div>            --}}
-                    {{-- @elseif( $key == 'is_bidding' ) --}}
-                    @if( $key == 'is_bidding' )
+                        </div>           
+                    @elseif( $key == 'is_bidding' )
                         {{ Form::label($key, __('message.'.$key), ['class' => 'form-control-label']) }}
                         <div class="custom-switch custom-switch-text custom-switch-color custom-control-inline mt-2">
                             <div class="custom-switch-inner">
